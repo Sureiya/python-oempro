@@ -15,6 +15,7 @@ class Client:
 	def request(self, data):
 		data.update({'ResponseFormat': 'JSON', 'SessionID': self.session_id})
 		data_string = parse.urlencode(data).encode('ascii')
+		print(self.api_url, data_string)
 		response = request.urlopen(self.api_url, data_string)
 		response_json = response.read().decode('utf8')
 		print(response_json)
@@ -42,12 +43,12 @@ class Client:
 			'RecordsPerRequest': records,
 			'SearchField': search_field,
 			'SearchKeyword': search_keyword,
+			'SubscriberSegment': segment,
 		}
-		data.update({'SubscriberSegment': segment})
 		subscribers = self.request(data)
 		return subscribers
 
-	def subscribe(self, list_id, email_address, ip_address=None):
+	def subscribe(self, list_id, email_address, ip_address=''):
 		data = {
 			'Command': 'Subscriber.Subscribe',
 			'ListID': list_id,
@@ -56,6 +57,20 @@ class Client:
 		}
 		response = self.request(data)
 		print(response)
+		return response
+
+	def unsubscribe(self, list_id, email_address, ip_address='', campaign_id='', email_id=''):
+		data = {
+			'Command': 'Subscriber.Unsubscribe',
+			'ListID': list_id,
+			'EmailAddress': email_address,
+			'CampaignID': campaign_id,
+			'EmailID': email_id,
+			'IPAddress': ip_address,
+		}
+		response = self.request(data)
+		print(response)
+		return response
 
 
 class APIError(Exception):
