@@ -1,1 +1,1 @@
-from oempro.api import API
+from oempro.api import Client
