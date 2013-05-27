@@ -3,10 +3,10 @@ from urllib import parse, request
 import json
 
 
-class API:
+class Client:
 	session_id = None
 
-	def __init__(self, api_url=, username, password):
+	def __init__(self, api_url, username, password):
 		self.api_url = api_url
 		self.username = username
 		self.password = password
