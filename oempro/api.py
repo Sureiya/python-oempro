@@ -12,8 +12,11 @@ class Client:
 		self.password = password
 		self.session_id = self.login()
 
-	def request(self, data):
-		data.update({'ResponseFormat': 'JSON', 'SessionID': self.session_id})
+	def request(self, data, session_id=None):
+		if session_id is None:
+			data.update({'ResponseFormat': 'JSON', 'SessionID': self.session_id})
+		else:
+			data.update({'ResponseFormat': 'JSON', 'SessionID': session_id})
 		data_string = parse.urlencode(data).encode('ascii')
 		print(self.api_url, data_string)
 		response = request.urlopen(self.api_url, data_string)
@@ -27,9 +30,9 @@ class Client:
 			'Username': self.username,
 			'Password': self.password,
 			'RememberMe': 'true',
-			'DisableCaptcha': 'false',
+			'DisableCaptcha': 'true',
 		}
-		login_instance = self.request(data)
+		login_instance = self.request(data, session_id='')
 		if login_instance['Success'] is not True:
 			raise LoginError(login_instance['ErrorCode'][0])
 		return login_instance['SessionID']
