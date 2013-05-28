@@ -14,7 +14,7 @@ pip install -e git+git://github.com/Sureiya/python-oempro.git#egg=python-oempro
 ```
 
 Example:
-========
+--------
 ```python
 from oempro import api
 
@@ -26,7 +26,7 @@ print(subscribers)
 ```
 
 Testing:
-========
+--------
 
 I haven't put much work in the tests, but you can get them running by installing nose, and adding your API credentials to tests.py
 
