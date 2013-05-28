@@ -3,7 +3,7 @@ python-oempro
 
 A python 3.x client for oempro.
 
-Very feature incomplete. Please feel free to work and add what you need.
+Very feature incomplete. Please feel free to fork and add what you need.
 
 You can clone and use directly, or install with pip.
 
