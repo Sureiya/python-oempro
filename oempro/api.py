@@ -21,7 +21,6 @@ class Client:
 		print(self.api_url, data_string)
 		response = request.urlopen(self.api_url, data_string)
 		response_json = response.read().decode('utf8')
-		print(response_json)
 		return json.loads(response_json)
 
 	def login(self):
@@ -59,7 +58,6 @@ class Client:
 			'IPAddress': ip_address,
 		}
 		response = self.request(data)
-		print(response)
 		return response
 
 	def unsubscribe(self, list_id, email_address, ip_address='', campaign_id='', email_id=''):
@@ -72,7 +70,6 @@ class Client:
 			'IPAddress': ip_address,
 		}
 		response = self.request(data)
-		print(response)
 		return response
 
 
