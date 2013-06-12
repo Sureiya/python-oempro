@@ -1,5 +1,5 @@
-#!/usr/bin/python3.3
-from urllib import parse, request
+#!/usr/bin/env python3
+from urllib import urlopen, urlencode
 import json
 
 
@@ -17,9 +17,9 @@ class Client:
 			data.update({'ResponseFormat': 'JSON', 'SessionID': self.session_id})
 		else:
 			data.update({'ResponseFormat': 'JSON', 'SessionID': session_id})
-		data_string = parse.urlencode(data).encode('ascii')
+		data_string = urlencode(data).encode('ascii')
 		print(self.api_url, data_string)
-		response = request.urlopen(self.api_url, data_string)
+		response = urlopen(self.api_url, data_string)
 		response_json = response.read().decode('utf8')
 		return json.loads(response_json)
 
@@ -46,6 +46,15 @@ class Client:
 			'SearchField': search_field,
 			'SearchKeyword': search_keyword,
 			'SubscriberSegment': segment,
+		}
+		subscribers = self.request(data)
+		return subscribers
+
+	def get_subscriber(self, list_id, email_address):
+		data = {
+			'Command': 'Subscriber.Get',
+			'ListID': list_id,
+			'EmailAddress': email_address
 		}
 		subscribers = self.request(data)
 		return subscribers
