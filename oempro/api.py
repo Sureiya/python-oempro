@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2.7
 from urllib import urlopen, urlencode
 import json
 
@@ -59,13 +59,16 @@ class Client:
 		subscribers = self.request(data)
 		return subscribers
 
-	def subscribe(self, list_id, email_address, ip_address=''):
+	def subscribe(self, list_id, email_address, ip_address='', custom_fields=None):
 		data = {
 			'Command': 'Subscriber.Subscribe',
 			'ListID': list_id,
 			'EmailAddress': email_address,
 			'IPAddress': ip_address,
 		}
+		if custom_fields:
+			for key, data in custom_fields:
+				data['CustomField{0}'.format((int)key)] = data
 		response = self.request(data)
 		return response
 
