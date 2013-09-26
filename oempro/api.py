@@ -57,7 +57,10 @@ class Client:
 			'EmailAddress': email_address
 		}
 		subscriber = self.request(data)
-		return subscriber['SubscriberInformation']
+		if subscriber['Success'] == true:
+			return subscriber['SubscriberInformation']
+		else:
+			return None
 
 	def subscribe(self, list_id, email_address, ip_address='', custom_fields=None):
 		data = {
