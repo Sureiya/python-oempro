@@ -67,8 +67,8 @@ class Client:
 			'IPAddress': ip_address,
 		}
 		if custom_fields:
-			for key, data in custom_fields:
-				data['CustomField{0}'.format((int)key)] = data
+			for key, field_data in custom_fields:
+				data['CustomField{0}'.format((int)key)] = field_data
 		response = self.request(data)
 		return response
 
