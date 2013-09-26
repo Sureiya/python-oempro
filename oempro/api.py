@@ -56,8 +56,8 @@ class Client:
 			'ListID': list_id,
 			'EmailAddress': email_address
 		}
-		subscribers = self.request(data)
-		return subscribers
+		subscriber = self.request(data)
+		return subscriber['SubscriberInformation']
 
 	def subscribe(self, list_id, email_address, ip_address='', custom_fields=None):
 		data = {
@@ -67,8 +67,26 @@ class Client:
 			'IPAddress': ip_address,
 		}
 		if custom_fields:
-			for key, field_data in custom_fields:
-				data['CustomField{0}'.format((int)key)] = field_data
+			for key, field_data in custom_fields.iteritems():
+				print key
+				print field_data
+				data['CustomField{0}'.format(key)] = field_data
+		response = self.request(data)
+		return response
+
+	def update(self, list_id, subscriber_id, email_address, ip_address='', custom_fields=None):
+		data = {
+			'Command': 'Subscriber.Update',
+			'SubscriberListID': list_id,
+			'EmailAddress': email_address,
+			'SubscriberID': subscriber_id,
+		}
+		if custom_fields:
+			data['Fields'] = dict()
+			for key, field_data in custom_fields.iteritems():
+				print key
+				print field_data
+				data['Fields']['CustomField{0}'.format(key)] = field_data
 		response = self.request(data)
 		return response
 
@@ -84,6 +102,14 @@ class Client:
 		response = self.request(data)
 		return response
 
+	def delete_subscribers(self, list_id, subscriber_ids):
+		data = {
+			'Command': 'Subscribers.Delete',
+			'SubscriberListID': list_id,
+			'Subscribers': ','.join(subscriber_ids),
+		}
+		response = self.request(data)
+		return response	
 
 class APIError(Exception):
 	error_messages = {99998: 'Authentication Failure or Session Expired',
