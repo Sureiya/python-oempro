@@ -57,7 +57,7 @@ class Client:
 			'EmailAddress': email_address
 		}
 		subscriber = self.request(data)
-		if subscriber['Success'] == true:
+		if subscriber['Success'] == True:
 			return subscriber['SubscriberInformation']
 		else:
 			return None
